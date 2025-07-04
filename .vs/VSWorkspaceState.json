@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\app",
+    "\\app\\Exceptions",
+    "\\resources",
+    "\\resources\\views",
+    "\\resources\\views\\contact",
+    "\\storage",
+    "\\storage\\app",
+    "\\storage\\app\\public",
+    "\\storage\\framework",
+    "\\storage\\logs"
+  ],
+  "SelectedNode": "\\app\\Exceptions\\Handler.php",
+  "PreviewInSolutionExplorer": false
+}
