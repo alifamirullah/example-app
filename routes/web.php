@@ -32,7 +32,6 @@ Route::get('registration', [CustomAuthController::class, 'registration'])->name(
 Route::post('custom-registration', [CustomAuthController::class, 'customRegistration'])->name('register.custom'); 
 Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
 Route::get('profile', [CustomAuthController::class, 'profile']);
-Route::get('adminHome', [AdminController::class, 'adminHome'])->name('admin.home');
 Route::post('update-user', [AdminController::class, 'update'])->name('admin.update');;
 
 
@@ -56,7 +55,7 @@ All Admin Routes List
 Route::middleware(['auth', 'user-access:admin'])->group(function () {
   
     Route::get('/adminHome', [AdminController::class, 'adminHome']);
-});
+})->name('admin.home');
   
 /*------------------------------------------
 --------------------------------------------
@@ -68,7 +67,6 @@ Route::middleware(['auth', 'user-access:seller'])->group(function () {
     Route::get('/sellerHome', [CustomAuthController::class, 'sellerHome']);
 });
 
-Route::resource('admin', AdminController::class);
 
 
 Route::get('cart', [ProductController::class, 'cart'])->name('cart');

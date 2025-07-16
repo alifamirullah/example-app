@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -43,12 +44,29 @@ class ProductController extends Controller
             'name' => 'required',
             'detail' => 'required',
             'price' => 'required',
+            'file' => 'required|mimes:jpg,png,pdf|max:2048',
         ]);
+        $file = $request->file('file');
+        $file_title = $file->getClientOriginalName();
+        $file_extension = $file->getClientOriginalExtension();
+        $file_name = md5(microtime().$file_title).'.'.$file_extension;
+        
 
+        Storage::disk('public')->put($file_name, fopen($file , 'r+'), 'public');
         $input = $request->all();
 
-        Product::create($input);
-         
+        
+        $product = new Product([
+            'name' => $request->get('name'),
+            'detail' => $request->get('detail'),
+            'price' => $request->get('price'),
+            'publish' => $request->get('publish'),
+            'file' => $file_name,
+            
+        ]);
+        $product->save();
+        
+        
         return redirect()->route('products.index')
                         ->with('success','Product created successfully.');
     }
