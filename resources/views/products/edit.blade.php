@@ -18,11 +18,11 @@
         </div>
     @endif
   
-    <form action="{{ route('products.update',$product->id) }}" method="POST">
+    <form action="{{ route('products.update',$product->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
    
-         <div class="row">
+        <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Name:</strong>
@@ -41,7 +41,20 @@
                     <textarea class="form-control" style="height:150px" name="price" placeholder="Price">{{ $product->detail }}</textarea>
                 </div>
             </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Publish:</strong>
+                <input type="radio" name="publish" value="yes"> Yes
+                <input type="radio" name="publish" value="no"> No
             </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Image:</strong>
+                <input type="file" name="file">
+            </div>
+        </div>
+        </div>
         <div class="flex lg:w-2/3 w-full sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-end">
         <button type="submit" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Submit</button>
       </div>

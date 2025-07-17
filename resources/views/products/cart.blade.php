@@ -27,7 +27,7 @@
                     </td>
                     <td data-th="Price">${{ $details['price'] }}</td>
                     <td data-th="Quantity">
-                        <input type="number" value="{{ $details['quantity'] }}" class="form-control quantity update-cart" />
+                        <input type="number" id="quantity" value="{{ $details['quantity'] }}" class="form-control quantity update-cart" />
                     </td>
                     <td data-th="Subtotal" class="text-center">${{ $details['price'] * $details['quantity'] }}</td>
                     <td class="actions" data-th="">
@@ -44,7 +44,7 @@
         <tr>
             <td colspan="5" class="text-right">
                 <a href="{{ url('/products') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a>
-                <button class="btn btn-success">Checkout</button>
+                <a href="{{ url('/products') }}" class="btn btn-success">Checkout</a>
             </td>
         </tr>
     </tfoot>
@@ -54,6 +54,23 @@
 @section('scripts')
 <script type="text/javascript">
   
+  document.addEventListener('DOMContentLoaded', function () {
+    const quantityInputs = document.querySelectorAll('.update-cart');
+
+    quantityInputs.forEach(function (input) {
+        input.addEventListener('input', function () {
+            const row = input.closest('tr');
+            const price = parseFloat(input.dataset.price) || 0;
+            const quantity = parseInt(input.value) || 0;
+            const subtotalCell = row.querySelector('.subtotal');
+
+            const subtotal = (price * quantity).toFixed(2);
+            if (subtotalCell) {
+                subtotalCell.textContent = `$${subtotal}`;
+            }
+        });
+    });
+});
     $("input.update-cart").change(function (e) {
         e.preventDefault();
   

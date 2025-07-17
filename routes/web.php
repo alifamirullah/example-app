@@ -1,11 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\AdminController;
+use App\Mail\CheckoutEmail;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -73,4 +75,9 @@ Route::get('cart', [ProductController::class, 'cart'])->name('cart');
 Route::get('add-to-cart/{id}', [ProductController::class, 'addToCart'])->name('add.to.cart');
 Route::patch('update-cart', [ProductController::class, 'cartupdate'])->name('update.cart');
 Route::delete('remove-from-cart', [ProductController::class, 'remove'])->name('remove.from.cart');
+Route::get('/send-email', function() {
 
+    Mail::to(auth()->user()->email)->send(new CheckoutEmail());
+    return 'Checkout email sent!';
+
+});

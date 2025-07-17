@@ -97,8 +97,23 @@ class ProductController extends Controller
             'detail' => 'required',
             'price' => 'required',
         ]);
+
+        $file = $request->file('file');
+        $file_title = $file->getClientOriginalName();
+        $file_extension = $file->getClientOriginalExtension();
+        $file_name = md5(microtime().$file_title).'.'.$file_extension;
         
-        $product->update($request->all());
+
+        Storage::disk('public')->put($file_name, fopen($file , 'r+'), 'public');
+
+    
+        $products = Product::find($product)->first();
+        $products->name = $request->get('name');
+        $products->detail = $request->get('detail');
+        $products->price = $request->get('price');
+        $products->publish = $request->get('publish');
+        $products->file = $file_name;
+        $products->save();
         
         return redirect()->route('products.index')
                         ->with('success','Product updated successfully');
